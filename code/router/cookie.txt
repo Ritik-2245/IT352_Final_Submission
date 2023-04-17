@@ -1,0 +1,2 @@
+PHPSESSID
+session_id

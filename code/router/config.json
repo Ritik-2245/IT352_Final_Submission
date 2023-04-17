@@ -1,0 +1,8 @@
+{
+    "WTF_CSRF_ENABLED": "False",
+    "SQLALCHEMY_DATABASE_URI":"sqlite:///session_data.db?max_pool_size=50",
+    "SESSION_PERMANENT":"False",
+    "SECRET_KEY":"secret"
+}
+
+

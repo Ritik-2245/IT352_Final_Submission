@@ -1,0 +1,7 @@
+flask
+requests
+flask-cors
+pickle5
+jsonpickle
+flask-sqlalchemy
+

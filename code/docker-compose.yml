@@ -1,0 +1,78 @@
+version: '3'
+
+services:
+  router:
+    restart: always
+    container_name: router
+    build:
+      context: ./router
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - flask-network
+     
+      
+  vul-web:
+    container_name: vul-web
+    restart: always
+    build:
+      context: ./Vul-Website
+      dockerfile: Dockerfile
+    volumes:
+      - ./Vul-Website/src:/var/www/html
+    networks:
+      - vul-network
+      - flask-network
+    
+  
+  safe-web:
+    container_name: safe-web
+    restart: always
+    build:
+      context: ./Safe-Website
+      dockerfile: Dockerfile
+    volumes:
+      - ./Safe-Website/src:/var/www/html 
+    
+    networks:
+      - safe-network
+      - flask-network
+  
+  safe-db:
+    container_name: safe-db
+    restart: always
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_USER: root
+      MYSQL_ALLOW_EMPTY_PASSWORD: True
+      MYSQL_USER: dvwa
+      MYSQL_PASSWORD: dvwa
+      MYSQL_TCP_PORT: 800
+    volumes:
+      - ./safe-sql/data:/var/lib/mysql
+    networks:
+      - safe-network
+
+  vul-db:
+    container_name: vul-db
+    restart: always
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_USER: root
+      MYSQL_ALLOW_EMPTY_PASSWORD: True
+      MYSQL_USER: dvwa
+      MYSQL_PASSWORD: dvwa
+      MYSQL_TCP_PORT: 400
+    volumes:
+      - ./vul-sql/data:/var/lib/mysql
+    networks:
+      - vul-network
+  
+networks:
+  safe-network:
+    driver: bridge
+  flask-network:
+    driver: bridge
+  vul-network:
+    driver: bridge
